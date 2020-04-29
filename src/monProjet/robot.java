@@ -2,10 +2,10 @@ package monProjet;
 
 public class robot {
 	
-	public static int startX;//pos depart robot
-	public static int startY;//pos depart robot
-	public static int xPos; // x lignes position ou se trouve le robot
-	public static int yPos; // y colonnes position ou se trouve le robot
+	static int startX;//pos depart robot
+	static int startY;//pos depart robot
+	static int xPos; // x lignes position ou se trouve le robot
+	static int yPos; // y colonnes position ou se trouve le robot
 	static boolean lignesPaires =(zoneGeo.lignes%2==0);
 	static boolean fin=false ; //fin de parcours ==false
 	static boolean sensParcours;//sens de parcours horizontale de la zone: gauche a droite = true 
@@ -25,6 +25,12 @@ public class robot {
 		else sensParcours=false;//du droite vers gauche
 		
 	}
+	public static int getxPos() {
+		return xPos;
+	}
+	public static int getyPos() {
+		return yPos;
+	}
 	static zoneGeo zone=new zoneGeo();
 	static obj test;//l objet où se trouve le robot
 	static boolean autorisation ;
@@ -32,6 +38,7 @@ public class robot {
 	public static void parcours ()	{
 		//methode de parcours du robot (incrementation des xPos et yPos
 		zone.show();//afficher la zone geo
+		System.out.println("Robot dans la position : "+ (xPos+1)+" - "+(yPos+1));
 		testEmplacement(xPos,yPos);//le robot teste cet emplacement
 		if (testFinParcours()) {// les point finales du parcours
 			fin=true;

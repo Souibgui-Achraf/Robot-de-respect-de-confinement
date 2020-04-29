@@ -80,7 +80,16 @@ public class mainClass {
 		    	System.out.println("Taper Start pour demarrer");
 		    	}
 				robot.parcours();//le robot commence son parcours
-			if(robot.fin) System.out.println("Fin de parcours");//fin du parcours
+			if(robot.fin) {
+				System.out.println(" ************\\Fin de parcours/*************");//fin du parcours
+				System.out.println("    ************************************");
+				System.out.println("       ******************************");
+				System.out.println("          ************************");
+				System.out.println("             ******************");
+				System.out.println("                ************");
+				System.out.println("                   ******");
+				System.out.println("                     **");
+			}
 	
 	}
 	}

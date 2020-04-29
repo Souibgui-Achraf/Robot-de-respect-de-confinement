@@ -3,7 +3,7 @@ package monProjet;
 public class zoneGeo{
 	static int lignes;
 	static int colonnes;
-	public static obj[][] matrice;//matrice modelisant la zone geo
+	static obj[][] matrice;//matrice modelisant la zone geo
 	public void create (int n,int m) {//creation de la zone geo
 		matrice =new obj[n][m];
 		lignes =n;
@@ -27,7 +27,7 @@ public class zoneGeo{
 			System.out.print("  **   |");
 			for (int j=0; j<colonnes;j++) {
 				char c=' ';//afficher le robot
-				if (robot.xPos==i&&robot.yPos==j) c='R';
+				if (robot.getxPos()==i&&robot.getyPos()==j) c='R';
 				if (matrice[i][j] instanceof personne) System.out.print(c+"P"+"|");
 				else if (matrice[i][j] instanceof animal ) System.out.print(c+"A"+"|");
 				else if (matrice [i][j] instanceof voiture) System.out.print(c+"V"+"|");

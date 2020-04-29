@@ -3,14 +3,16 @@ package monProjet;
 public class affichage {
 	public static void affiche() {
 		System.out.println ("Projet Vérification du respect du confinement par un robot") ;
-		System.out.println ("structure du fichier :");
-		System.out.println ("N;M");
-		System.out.println ("X;Y");
-		System.out.println ("instance;x;y;motif");
-		System.out.println ("instance;x;y;motif");
-		System.out.println (".");
-		System.out.println (".");
-		System.out.println (".");
+		System.out.println ("***\\ Structure du fichier/***");
+		System.out.println ("*                           *");
+		System.out.println ("* N;M                       *");
+		System.out.println ("* X;Y                       *");
+		System.out.println ("* instance;x;y;motif        *");
+		System.out.println ("* instance;x;y;motif        *");
+		System.out.println ("* .                         *");
+		System.out.println ("* .                         *");
+		System.out.println ("*                           *");
+		System.out.println ("*****************************");
 		System.out.println ("NB: - 1ere ligne les dimentions de la zone ");
 		System.out.println ("N:lignes et M:colonnes");
 		System.out.println ("    - 2eme ligne pour la position de depart du robot ");
