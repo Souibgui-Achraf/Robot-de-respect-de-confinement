@@ -4,24 +4,26 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFileChooser;
 
 public class mainClass {
-
 	
+	public static window w;
 
 	public static void main(String[] args) throws IOException {
 		int lignes;//matrice
 		int colonnes;//matrice
 		int startX;//pour robot
 		int startY;//pour robot
+		choose ch=new choose();
 		
 		zoneGeo zone=new zoneGeo();
-		
-		affichage.affiche();
-		
+		while(!choose.start) {
+			sleep(200);
+		};
+		choose.frame.dispose();
 		JFileChooser chooser = new JFileChooser();
 		FileReader in = null;
 		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
@@ -70,26 +72,30 @@ public class mainClass {
 				}
 			}
 			}
+		
+		window w=new window(zoneGeo.lignes,zoneGeo.colonnes);
+		
 		zone.show();//afficher la zone geo
-		System.out.println("Taper Start pour demarrer");
-		    Scanner sc = new Scanner(System.in);
-		    String test;
-		    test=sc.next();
-		    while (!test.toLowerCase().equals("start")){
-		    	test=sc.next();
-		    	System.out.println("Taper Start pour demarrer");
-		    	}
-				robot.parcours();//le robot commence son parcours
-			if(robot.fin) {
-				System.out.println(" ************\\Fin de parcours/*************");//fin du parcours
-				System.out.println("    ************************************");
-				System.out.println("       ******************************");
-				System.out.println("          ************************");
-				System.out.println("             ******************");
-				System.out.println("                ************");
-				System.out.println("                   ******");
-				System.out.println("                     **");
-			}
+		sleep(2000);
+		startb button=new startb();
+		while(!startb.selected) {
+			sleep(200);
+		}
+		startb.frame.dispose();
+		robot.parcours();
+		
+		if(robot.fin) {
+			sleep(1000);
+			resultat r=new resultat();
+		}
+	}
 	
+	
+	static void sleep(int x) {//timer sleeps for x ms
+		try {
+		    TimeUnit.MILLISECONDS.sleep(x);
+		} catch (InterruptedException ie) {
+		    Thread.currentThread().interrupt();
+		}
 	}
 	}

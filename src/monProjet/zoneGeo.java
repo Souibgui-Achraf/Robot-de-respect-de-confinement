@@ -1,9 +1,12 @@
 package monProjet;
 
+import javax.swing.ImageIcon;
+
 public class zoneGeo{
 	static int lignes;
 	static int colonnes;
-	static obj[][] matrice;//matrice modelisant la zone geo
+	public static obj[][] matrice;//matrice modelisant la zone geo
+	window w= mainClass.w;
 	public void create (int n,int m) {//creation de la zone geo
 		matrice =new obj[n][m];
 		lignes =n;
@@ -16,28 +19,35 @@ public class zoneGeo{
 		//renvoi l obj a la pos x,y
 		return matrice[x][y];
 	}
-	public void show() {//affichage de la zone geo
-		System.out.println("*********************************************");
-		System.out.println(" ***********\\ ZONE GEOGRAPHIQUE /***********");
-		System.out.println("  *****************************************");
-		System.out.print("  **   ");
-		for(int i=0;i<colonnes*3+1;i++) System.out.print("_");
-		System.out.println("   **");
-		for (int i=0;i<lignes;i++) {
-			System.out.print("  **   |");
-			for (int j=0; j<colonnes;j++) {
-				char c=' ';//afficher le robot
-				if (robot.getxPos()==i&&robot.getyPos()==j) c='R';
-				if (matrice[i][j] instanceof personne) System.out.print(c+"P"+"|");
-				else if (matrice[i][j] instanceof animal ) System.out.print(c+"A"+"|");
-				else if (matrice [i][j] instanceof voiture) System.out.print(c+"V"+"|");
-				else System.out.print(c+"-"+"|");
+	public void show() {
+		ImageIcon img;
+		String path ;
+	
+		for (int i=0;i<zoneGeo.lignes ;i++) {
+			for (int j=0; j<zoneGeo.colonnes;j++) {
+				path="/";
+				if (robot.getxPos()==i&&robot.getyPos()==j) {
+					path+="robot";
+				}
+				if (zoneGeo.matrice[i][j] instanceof personne) {
+					path+="homme";
+				}
+				else if (zoneGeo.matrice[i][j] instanceof animal ) {
+					path+="animal";
+				}
+				else if (zoneGeo.matrice [i][j] instanceof voiture) {
+					path+="voiture";
+				}
+				else {
+					path+="void";
+				}
+				path+=".jpg";
+				
+				img=new ImageIcon(window.class.getResource(path));
+				window.seticon(img, i, j);
 			}
-		System.out.println("   **");			
 		}
-		System.out.println("  **   *******************************   **");
-		System.out.println("  **                                     **");
-		System.out.println("  *****************************************");
-		//System.out.println("  *****************************************");
+
 	}
+	
 }

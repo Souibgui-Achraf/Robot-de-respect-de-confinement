@@ -1,5 +1,7 @@
 package monProjet;
 
+import java.util.concurrent.TimeUnit;
+
 public class robot {
 	
 	static int startX;//pos depart robot
@@ -10,7 +12,8 @@ public class robot {
 	static boolean fin=false ; //fin de parcours ==false
 	static boolean sensParcours;//sens de parcours horizontale de la zone: gauche a droite = true 
 	static boolean sensParcoursV;//sens parcours vericale : haut vers bas = true 
-	
+	public static int p=0,pa=0,pn=0,v=0,va=0,vn=0,a=0;
+	static dialogue d;
 	
 	public robot (int x,int y) {//constructeur
 		//initialisations du position du robot
@@ -25,10 +28,10 @@ public class robot {
 		else sensParcours=false;//du droite vers gauche
 		
 	}
-	public static int getxPos() {
+	public static int getxPos() {//renvoi pos robot suivant ligne
 		return xPos;
 	}
-	public static int getyPos() {
+	public static int getyPos() {//renvoi pos robot suivant colonne
 		return yPos;
 	}
 	static zoneGeo zone=new zoneGeo();
@@ -36,72 +39,86 @@ public class robot {
 	static boolean autorisation ;
 	
 	public static void parcours ()	{
+		
 		//methode de parcours du robot (incrementation des xPos et yPos
+		
 		zone.show();//afficher la zone geo
-		System.out.println("Robot dans la position : "+ (xPos+1)+" - "+(yPos+1));
-		testEmplacement(xPos,yPos);//le robot teste cet emplacement
+		testEmplacement(xPos,yPos);//le robot teste cet emplacement finale
+		
+		
 		if (testFinParcours()) {// les point finales du parcours
 			fin=true;
+			
 			return;
 		}
-		if (yPos==zoneGeo.colonnes-1&&sensParcours||yPos==0&& !sensParcours) { 
-			// 1ere et derniere colonne
-			//si le robot avance du gauche vers droite et on atteint la derniere colonne
-			//ou du droite vers gauche et on atteint la 1ere colonne
-			if( sensParcoursV) xPos++;
-			//et si du haut vers bas  : ypos reste la meme et xpos augmente
-			else xPos--;
-			sensParcours=!sensParcours;//et on inverse le sens de parcours horizontale
-			parcours();//appel recursive avec les nouveaux positions xPos et yPos
-			return; //pour ne pas effectuer d autres instructions apres l appel recursif
-		}
-		if (sensParcours ) {//reste du matrice
-			//si de gauche vers droite yPos augmente
-			yPos++;
-			parcours();
-			return;
-		}
-		else{//reste du matrice aussi
-			//si de droite vers gauche yPos diminue
-			yPos--;
-			parcours();
-			return;
+		else {
+			if (yPos==zoneGeo.colonnes-1&&sensParcours||yPos==0&& !sensParcours) { 
+				// 1ere et derniere colonne
+				//si le robot avance du gauche vers droite et on atteint la derniere colonne
+				//ou du droite vers gauche et on atteint la 1ere colonne
+				if( sensParcoursV) xPos++;
+				//et si du haut vers bas  : ypos reste la meme et xpos augmente
+				else xPos--;
+				sensParcours=!sensParcours;//et on inverse le sens de parcours horizontale
+				parcours();//appel recursive avec les nouveaux positions xPos et yPos
+				return; //pour ne pas effectuer d autres instructions apres l appel recursif
+			}
+			if (sensParcours ) {//reste du matrice
+				//si de gauche vers droite yPos augmente
+				yPos++;
+				parcours();
+				return;
+			}
+			else{//reste du matrice aussi
+				//si de droite vers gauche yPos diminue
+				yPos--;
+				parcours();
+				return;
+			}
 		}
 	}
 	public static void testEmplacement(int x,int y) {
 		//tester la position actuelle et afficher les messages necessaires
-		//System.out.println("Robot dans la position x= "+(x+1) +" y= "+ (y+1) );
 		test=zone.getObj(x,y) ;//l objet où se trouve le robot
 		if (test!=null) { //il y'a une personne ou un animal ou une voitue
-		autorisation =test.check();
-		if (test instanceof personne) {//s'il y a une personne
-			System.out.println("Robot: Montrer-moi votre motif de sortie !");
-			if (autorisation) {
-				System.out.println("Personne: Voici mon motif");
-				System.out.println("Robot: Vous pouvez passer !");
+			autorisation =test.check();
+			d=new dialogue();
+			if (test instanceof personne) {//s'il y a une personne
+				p++;
+				if (autorisation) {
+					pa++;
+					d.seticon("pa");
+				}
+				else {
+					pn++;
+					d.seticon("pn"); 
+				}
 			}
-			else {
-				System.out.println("Personne: J'en ai pas");
-				System.out.println("Robot: Vous n'avez pas le droit de circuler sans autorisation pendant le confinement !");
-			}
-		}
-		if (test instanceof voiture) {//s'il y a une voiture
-			System.out.println("Robot: Montrer moi votre motif de circulation !");
-			if (autorisation) {
-				System.out.println("Conducteur: Voici mon motif de circulation");
-				System.out.println("Robot Vous pouvez passer !");
-			}
-			else {
-				System.out.println("Conducteur: J'en ai pas");
-				System.out.println("Robot: Vous n'avez pas le droit de circuler sans autorisation pendant le confinement !");
-			}
-		}
-		if (test instanceof animal ) {//s'il y a un animal
-			System.out.println("C'est un animal"	);
-		}
-		}
-		else System.out.println("Le robot continue son trajet normalement");//s'il y a rien
-		System.out.println("");
+			else if (test instanceof voiture) {//s'il y a une voiture
+					v++;
+					//System.out.println("Robot: Montrer moi votre motif de circulation !");
+					if (autorisation) {
+						va++;
+						d.seticon("va");
+					}
+					else {
+						vn++;
+						d.seticon("vn");
+					}
+				}
+				else if (test instanceof animal ) {//s'il y a un animal
+						a++;
+						d.seticon("a");
+					}
+			
+			
+			sleep(1500);
+		}else 
+			sleep(500);
+		
+		
+		
+		if(dialogue.frame!=null) dialogue.frame.dispose();
 	}
 	
 	
@@ -138,6 +155,13 @@ public class robot {
 			}
 		}
 		return false ;//si tous les tests faux
+	}
+	static void sleep(int x) {//timer sleeps for x ms
+		try {
+		    TimeUnit.MILLISECONDS.sleep(x);
+		} catch (InterruptedException ie) {
+		    Thread.currentThread().interrupt();
+		}
 	}
 	
 }
