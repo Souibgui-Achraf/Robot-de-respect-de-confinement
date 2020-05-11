@@ -17,12 +17,9 @@ public class resultat {
 
 	private JFrame frame;
 
-	public resultat() {
-		initialize();
-		frame.setVisible(true);
-	}
 
-	private void initialize() {
+
+	 public resultat() {
 		int p,v,a,pa,pn,va,vn;
 		double pap,pnp,vap,vnp,tap,tnp;
 		
@@ -55,8 +52,12 @@ public class resultat {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null);
 		frame.setUndecorated(true);
+		frame.setVisible(true);
 		
 		
+		
+		
+		//initialisation des champs de textes pour les statistiques
 		JTextPane textPane_1 = new JTextPane();
 		textPane_1.setText(p+"");
 		textPane_1.setForeground(new Color(66, 118, 149));
@@ -271,24 +272,21 @@ public class resultat {
 		StyleConstants.setAlignment(center15, StyleConstants.ALIGN_CENTER);
 		doc15.setParagraphAttributes(0, doc15.getLength(), center15, false);
 		
-		
-		
-		
-		JLabel lb = new JLabel("New label");
+		JLabel lb = new JLabel();//pour le tableau
 		lb.setBounds(25, 25, 571, 253);
 		frame.getContentPane().add(lb);
 		lb.setIcon(new ImageIcon(window.class.getResource("/table.png")));
 		
-		JLabel lblNewLabel = new JLabel();
-		lblNewLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				System.exit(0);
-			}
-		});
+		JLabel lblNewLabel = new JLabel();//button exit program
 		lblNewLabel.setBounds(frame.getWidth()-25, 0, 25, 25);
 		frame.getContentPane().add(lblNewLabel);
 		lblNewLabel.setIcon(new ImageIcon(window.class.getResource("/x.jpg")));
+		lblNewLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {//if clicked
+				System.exit(0);
+			}
+		});
 		
 	}
 }

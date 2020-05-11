@@ -10,26 +10,26 @@ import javax.swing.JFileChooser;
 
 public class mainClass {
 	
-	public static window w;
 
 	public static void main(String[] args) throws IOException {
 		int lignes;//matrice
 		int colonnes;//matrice
 		int startX;//pour robot
 		int startY;//pour robot
-		choose ch=new choose();
+		choose ch=new choose();//afficher fenetre du choix de fichier 
 		
 		zoneGeo zone=new zoneGeo();
-		while(!choose.start) {
+		while(!choose.start) {//wait untill we choose a file
 			sleep(200);
 		};
-		choose.frame.dispose();
+		choose.frame.dispose();//delete choose frame 
+		
 		JFileChooser chooser = new JFileChooser();
 		FileReader in = null;
 		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
 		{
-		File selectedFile = chooser.getSelectedFile();
-		in = new FileReader(selectedFile);
+			File selectedFile = chooser.getSelectedFile();
+			in = new FileReader(selectedFile);
 		}
 		BufferedReader br = new BufferedReader(in);
 	
@@ -72,21 +72,22 @@ public class mainClass {
 				}
 			}
 			}
-		
+		//creation de la fenetre qui va afficher la zone
 		window w=new window(zoneGeo.lignes,zoneGeo.colonnes);
-		
-		zone.show();//afficher la zone geo
+		zone.show();//afficher la zone geo dans la fenetre
 		sleep(2000);
-		startb button=new startb();
-		while(!startb.selected) {
+		
+		startb button=new startb();//affichage du boutton START
+		while(!startb.selected) {//on attend jusqu'a start is selected
 			sleep(200);
 		}
-		startb.frame.dispose();
-		robot.parcours();
+		startb.frame.dispose();//delete start button 
+	
+		robot.parcours();//robot commence le parcours
 		
-		if(robot.fin) {
+		if(robot.fin) {//si robot atteint la pos finale
 			sleep(1000);
-			resultat r=new resultat();
+			resultat r=new resultat();//affichage de la fenetre de resultat
 		}
 	}
 	

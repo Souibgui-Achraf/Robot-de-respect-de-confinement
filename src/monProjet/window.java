@@ -1,7 +1,5 @@
 package monProjet;
 
-import java.awt.Color;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -9,19 +7,18 @@ import javax.swing.JLabel;
 public class window {
 
 	public static JFrame frame;
-	int w=86;
-	int h=64;
+
 	static JLabel[][] labels ;//conteneur des images
 	
-	public window(int i,int j) {
-		initialize(i,j);
-		window.frame.setVisible(true);
-	}
 	 public static void seticon(ImageIcon icon,int i,int j) {
+		 //modificatin de l image de conteneur (JLabel)
 		 window.labels[i][j].setIcon(icon);
 	 }
  
-	private void initialize(int lignes,int colonnes) {
+	 public window(int lignes,int colonnes) {
+		int w=86;
+		int h=64;
+			
 		frame = new JFrame();
 		frame.setResizable(false);
 		
@@ -31,13 +28,12 @@ public class window {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
 		labels=new JLabel[lignes][colonnes];//conteneur des images
-		for(int i=0;i<zoneGeo.lignes;i++) {//jlabel tab
+		for(int i=0;i<zoneGeo.lignes;i++) {//jlabel tab (initialisation)
 			
 			for(int j=0;j<zoneGeo.colonnes;j++) {
 				labels[i][j]=new JLabel();
-				//window.labels[i][j].setIcon(new ImageIcon(window.class.getResource("/void.jpg")));
-				
 				labels[i][j].setBounds(j*w,i*h, w, w);
 				frame.getContentPane().add(labels[i][j]);
 		}

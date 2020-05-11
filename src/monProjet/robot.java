@@ -12,8 +12,10 @@ public class robot {
 	static boolean fin=false ; //fin de parcours ==false
 	static boolean sensParcours;//sens de parcours horizontale de la zone: gauche a droite = true 
 	static boolean sensParcoursV;//sens parcours vericale : haut vers bas = true 
+	//total personnes,autorisé,non autorisé,total voitures,autorisés,non autorisés,animaux
 	public static int p=0,pa=0,pn=0,v=0,va=0,vn=0,a=0;
-	static dialogue d;
+	static zoneGeo zone=new zoneGeo();
+	static obj test;//l objet où se trouve le robot
 	
 	public robot (int x,int y) {//constructeur
 		//initialisations du position du robot
@@ -34,9 +36,7 @@ public class robot {
 	public static int getyPos() {//renvoi pos robot suivant colonne
 		return yPos;
 	}
-	static zoneGeo zone=new zoneGeo();
-	static obj test;//l objet où se trouve le robot
-	static boolean autorisation ;
+	
 	
 	public static void parcours ()	{
 		
@@ -81,15 +81,14 @@ public class robot {
 		//tester la position actuelle et afficher les messages necessaires
 		test=zone.getObj(x,y) ;//l objet où se trouve le robot
 		if (test!=null) { //il y'a une personne ou un animal ou une voitue
-			autorisation =test.check();
-			d=new dialogue();
+			dialogue d=new dialogue();//initialisation de la fenetre du dialogue
 			if (test instanceof personne) {//s'il y a une personne
 				p++;
-				if (autorisation) {
+				if (test.check()) {//autorisé
 					pa++;
-					d.seticon("pa");
+					d.seticon("pa");//initialisation de l image du dialogue
 				}
-				else {
+				else {//non autorisé
 					pn++;
 					d.seticon("pn"); 
 				}
@@ -97,7 +96,7 @@ public class robot {
 			else if (test instanceof voiture) {//s'il y a une voiture
 					v++;
 					//System.out.println("Robot: Montrer moi votre motif de circulation !");
-					if (autorisation) {
+					if (test.check()) {
 						va++;
 						d.seticon("va");
 					}
@@ -118,7 +117,7 @@ public class robot {
 		
 		
 		
-		if(dialogue.frame!=null) dialogue.frame.dispose();
+		if(dialogue.frame!=null) dialogue.frame.dispose();//delete dialogue frame
 	}
 	
 	

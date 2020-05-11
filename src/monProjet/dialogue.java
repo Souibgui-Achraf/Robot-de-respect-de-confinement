@@ -1,6 +1,5 @@
 package monProjet;
 
-import java.awt.EventQueue;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
@@ -12,31 +11,9 @@ import javax.swing.JLabel;
 public class dialogue {
 
 	public static JFrame frame;
-	JLabel lb;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					dialogue window = new dialogue();
-					dialogue.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public dialogue() {
-		initialize();
-	}
+	private JLabel lb;//conteneur des images du dialogue
 	
-	public void seticon(String s) {
+	public void seticon(String s) {//pour modifier l image du Jlabel (dialogue)
 		if (s.equals("")) lb.setIcon(null);
 		else {
 			s+=".png";
@@ -45,28 +22,29 @@ public class dialogue {
 	}
 
 
-	private void initialize() {
+	public dialogue() {
 		int w=300;
 		int h=259;
 		frame = new JFrame();
 		frame.setSize(320,282);
+		
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	    GraphicsDevice defaultScreen = ge.getDefaultScreenDevice();
 	    Rectangle rect = defaultScreen.getDefaultConfiguration().getBounds();
-	    frame.setLocation((int) rect.getMaxX() -320, 0);
-	//	frame.setBounds(100, 100, 320, 282);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    frame.setLocation((int) rect.getMaxX() -320, 0);//top left
+		
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.setUndecorated(true);
 		dialogue.frame.setVisible(true);
 		
-		lb = new JLabel();
+		lb = new JLabel();//pour l image du dialogue
 		lb.setBounds(10, 10, w, h);
 		frame.getContentPane().add(lb);
 		
-		JLabel b = new JLabel();
+		JLabel b = new JLabel();//pour l image de background
 		b.setBounds(0, 0,320,282);
-		b.setIcon(new ImageIcon(dialogue.class.getResource("/back.jpg")));
+		b.setIcon(new ImageIcon(dialogue.class.getResource("/background2.jpg")));
 		frame.getContentPane().add(b);
 	}
 
